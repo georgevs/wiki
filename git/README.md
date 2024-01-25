@@ -21,6 +21,7 @@ git log --oneline origin/feat ^$(hostname)/feat
 ### Save work on host
 ```
 git tag $(hostname)/feat/$(date +%m-%d-%y) --message "saved work..."
+git ls-remote --tags
 ```
 ### Transfer work to another host
 ```
