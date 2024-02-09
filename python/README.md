@@ -144,6 +144,7 @@ xs.reverse()
 reversed(xs) -> itx
 
 xs.index(x,b,e) -> i  ValueError
+next((x for x in xs if fn(x)), default) -> x
 xs.count(x) -> n
 
 xs.append(x)      xs[n:n] = [x]
