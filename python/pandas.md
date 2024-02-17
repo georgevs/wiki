@@ -31,6 +31,8 @@ df.info()
 
 # stats
 stats_df = df.describe()
+
+df.hist(column='X')
 ```
 ### Generate data
 ```python
