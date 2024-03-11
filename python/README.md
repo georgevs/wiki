@@ -251,7 +251,33 @@ d[x] -> y                # KeyError
 d[x] = y
 del d[x]                 # KeyError
 d.pop(x, y0) -> y|y0
+d.update(d2) -> d
+d.update(x=y,...) -> d
+d.update(it ('x',y)) -> d
 
 d.setdefault(x,y0) -> y  # mutates
 d.get(x,y0) -> y|y0
+```
+## Paths
+```python
+os.path.join('dir1/dir2', 'dir3', f'{file}.{ext}') -> 'dir1/dir2/dir3/file.ext'
+os.path.split('dir1/dir2/dir3/file.ext') -> ('dir1/dir2/dir3', 'file.ext')
+os.path.dirname('dir1/dir2/dir3/file.ext') -> 'dir1/dir2/dir3'
+os.path.basename('dir1/dir2/dir3/file.ext') -> 'file.ext'
+os.path.splitext('dir1/dir2/dir3/file.ext') -> ('dir1/dir2/dir3/file', '.ext')
+os.path.relpath('dir1/dir2/dir3/file.ext', 'dir1/dir2') -> 'dir3/file.ext'
+os.path.commonpath(['dir1/dir2/dirA/dirB/file.ext', 'dir1/dir2/dirC/dirD/file.ext']) -> 'dir1/dir2
+```
+### Scan folder recursively
+```python
+def scandir(folder_path):
+  folder_paths = [folder_path]
+  while folder_paths:
+    folder_path = folder_paths.pop()
+    with os.scandir(folder_path) as entries:
+      for entry in entries:
+        if entry.is_dir():
+          folder_paths.append(entry.path)
+        else:
+          yield entry.path 
 ```
