@@ -1,8 +1,5 @@
 # SASS
 
-## References
-[freeCodeCamp SASS](https://www.freecodecamp.org/learn/front-end-development-libraries/sass)
-
 ## Import
 ```
 <style type="text/scss"> ...

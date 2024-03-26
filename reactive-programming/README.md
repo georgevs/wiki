@@ -1,7 +1,6 @@
 # RxJS
 
 ## References
-- https://github.com/IliaIdakiev/rxjs-workshop
 - https://www.learnrxjs.io
 - https://rxmarbles.com
 - https://swirly.dev 

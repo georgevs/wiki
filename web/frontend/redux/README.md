@@ -1,8 +1,5 @@
 # Redux
 
-## References
-[freeCodeCamp Redux](https://www.freecodecamp.org/learn/front-end-development-libraries/redux/)
-
 ## Install
 ```
 npm install redux redux-thunk

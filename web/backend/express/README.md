@@ -1,8 +1,5 @@
 # Express
 
-## References
-[freeCodeCamp Express](https://www.freecodecamp.org/learn/back-end-development-and-apis/basic-node-and-express/)
-
 ## Instantiate
 ```
 // npm install express

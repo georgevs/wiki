@@ -1,7 +1,6 @@
 # jQuery
 
 ## Reference
-- [freeCodeCamp jQuery](https://www.freecodecamp.org/learn/front-end-development-libraries/jquery)
 - [cdnjs vs. unpkg](https://stackoverflow.com/questions/59182642/how-to-choose-a-cdn-to-load-javascript-css-libraries)
 - [jQuery vs D3](https://webkid.io/blog/replacing-jquery-with-d3/)
 

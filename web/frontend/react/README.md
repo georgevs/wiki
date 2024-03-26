@@ -3,9 +3,6 @@
 ## Design
 ![react-redux](./react-redux.drawio.svg)
 
-## References
-[freeCodeCamp React](https://www.freecodecamp.org/learn/front-end-development-libraries/react/)
-
 ## Render
 In client (aka front-end)
 ```

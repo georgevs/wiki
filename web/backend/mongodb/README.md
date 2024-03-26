@@ -1,8 +1,6 @@
 # MongoDB and Mongoose
 
 ## References
-[freeCodeCamp MongoDB](https://www.freecodecamp.org/learn/back-end-development-and-apis/mongodb-and-mongoose)
-
 [Mongoose](https://mongoosejs.com)
 
 ## MongoDB Atlass account
@@ -10,7 +8,6 @@
 ```
 openssl enc -aes-128-cbc -pbkdf2 -salt -e -in .env -out .env.enc
 openssl enc -aes-128-cbc -pbkdf2 -salt -d -in .env.enc -out .env
-  z1p#
 ```
 ## Docker mongo image (optional)
 ```

@@ -34,7 +34,7 @@ docker image build --no-cache --force-rm --tag dev-python - << EOF
   FROM dev-ubuntu
   RUN apt-get update && apt-get install -y tmux vim curl less python3 python3-pip
   USER george
-  ENV PATH "$PATH:/home/george/.local/bin"
+  ENV PATH "\$PATH:/home/george/.local/bin"
   RUN pip3 install notebook
 EOF
 ```

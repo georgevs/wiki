@@ -17,8 +17,8 @@ FRESH - X is in cache, and NOT cache expired
 STALE - X is in cache, but IS cache expired  
 
 ### HTTP cache headers
-CACHE headers - cache-control, ...
-REVALIDATE headers - etag, if-none-match, ...
+CACHE headers - cache-control, ...   
+REVALIDATE headers - etag, if-none-match, ...  
 
 DEPRECATED:
 ```
@@ -43,8 +43,6 @@ cache-control:
 age:
   <secs> - time spent in intermediary (deducted from max-age for proper expiry limit)
 
-etag | if-none-match | last-modified | if-modified-since   <-- validators
-
 etag:
   "<hash>"    - STRONG, assume hash contents
   w/"<hash>"  - WEAK, assume hash metadata
@@ -52,7 +50,7 @@ etag:
 
 ### Curl show headers
 ```
-curl -I https://...
+curl --head https://...
 ```
 
 ### ETag/If-none-match
@@ -67,15 +65,14 @@ SERVER (revalidate, not changed):
   HTTP/1 304 Not Modified
 SERVER (revalidate, changed):
   HTTP/1 200 OK
-  ...data...
 ```
 
-### Recommended strategy
+### Recommended strategies
 `cache-control: private, ...` for sensitive response;  
 `cache-control: public, ...` for shared assets to cache in CDN;  
 `cache-control: no-store` for responses which do not make sense to cache;  
 `app.<hash>.js` and `cache-control: max-age=<MAXINT>, immutable` for assets which won't ever change;  
-`index.html` and `cache-control: no-cache; etag: "<hash>"` for resources likely to change ALWAYS validate, use cache if not changed, else refetch
-`cache-control: max-age=<secs>` cache for reasonable time, then attempt revalidate
-`cache-control: max-age=<secs>, no-cache` cache for reasonable time, then revalidate
-`cache-control: max-age=<secs>, must-revalidate` fail if cannot revalidate (offline)
+`index.html` and `cache-control: no-cache; etag: "<hash>"` for resources likely to change ALWAYS validate, use cache if not changed, else re-fetch;  
+`cache-control: max-age=<secs>` cache for reasonable time, attempt revalidate if expired;  
+`cache-control: max-age=<secs>, no-cache` cache for reasonable time, revalidate if expired;  
+`cache-control: max-age=<secs>, must-revalidate` cache for reasonable time, fail if cannot revalidate (offline) when expired;  
