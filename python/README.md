@@ -199,7 +199,7 @@ s.swapcase/title/capitalize() -> s1
 byte(src, encoding= 'utf8')         -- immutable
 bytearray(src, encoding= 'utf8')    -- mutable     
 
-fromhex(s) ->bs
+fromhex(s) -> bs
 bs.hex() -> s
 
 s.encode('utf8') -> bs
