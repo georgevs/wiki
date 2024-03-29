@@ -42,7 +42,7 @@ git push origin HEAD:feat
 ```
 ### Publish subtree into another repo
 ```
-git -C path/to/workspace subtree split -p path/to/subtree -b subtree-branch
+git -C path/to/workspace subtree split -P path/to/subtree -b subtree-branch
 git push git@github.com:target-user/target-repo.git subtree-branch:target-branch
 ```
 ## Git useful aliases
