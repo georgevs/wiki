@@ -1,5 +1,10 @@
 # Backend
 
+## Install dependencies
+```bash
+npm install express mysql2 body-parser cors
+```
+
 ## Install live certificates
 Fetch certificates:
 ```bash
