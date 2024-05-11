@@ -145,6 +145,7 @@ reversed(xs) -> itx
 
 xs.index(x,b,e) -> i  ValueError
 next((x for x in xs if fn(x)), default) -> x
+next(find(pfn, xs), default) -> x
 xs.count(x) -> n
 
 xs.append(x)      xs[n:n] = [x]
@@ -204,6 +205,8 @@ bs.hex() -> s
 
 s.encode('utf8') -> bs
 bs.decode('utf8') -> s
+
+base64.urlsafe_b64decode(s).decode('utf8')
 
 memoryview(bs) -> xs
 ```
