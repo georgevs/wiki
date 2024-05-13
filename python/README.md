@@ -60,6 +60,32 @@ for i,x in enumerate(itx): ...
 list(range(10))[slice(0,5,2)]   # [0,2,4]
 ```
 
+## Iterators, generators, generator expressions, and itertools
+```python
+def generator(seed=0):
+  x = seed
+  while x < seed+10:
+    yield x
+    x += 1
+
+print(*generator())
+
+fn = lambda x: x*2
+print(*(fn(x) for x in generator()))
+print(*map(fn, generator()))
+
+pfn = lambda x: x%2==0
+print(*(x for x in generator() if pfn(x)))
+print(*filter(pfn, generator()))
+
+mfn = lambda x: x*2 if x%2==0 else None
+print(*(y for x in generator() if (y := mfn(x)) is not None))
+
+mfn = lambda x: [x*2] if x%2==0 else []
+flatten = itertools.chain.from_iterable
+print(*flatten(map(mfn, generator())))
+```
+
 ## Recursive Iterator
 ```python
 class Trie:
