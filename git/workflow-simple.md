@@ -76,3 +76,9 @@ git fetch origin
 git rebase origin/master
 git push origin HOST/master:master
 ```
+
+### Force branch to a commit
+```
+git branch --force BRANCH COMMIT        (for local)
+git push origin --force COMMIT:BRANCH   (for remote)
+``` 
