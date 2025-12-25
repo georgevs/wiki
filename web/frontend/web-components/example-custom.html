@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web components - custom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <script>
+      class CustomElement extends HTMLElement {
+        // Web componenets interface ...
+        
+        static observedAttributes = ['attr'];
+
+        constructor() {
+          console.log('ctor');
+          super();
+        }
+        attributeChangedCallback(name, oldVal, val) {
+          console.log('attributeChanged', { name, oldVal, val });
+          this.render({ [name]: val });
+        }
+        connectedCallback() { 
+          console.log('connected');
+        }
+        disconnectedCallback() {
+          console.log('disconnected');
+        }
+
+        // custom element interface ...
+
+        get attr() { return this.getAttribute('attr') }
+        set attr(val) { return this.setAttribute('attr', val) }
+
+        render(options) {
+          console.log('render', Object.keys(options));
+        }
+      }
+
+      window.customElements.define('x-custom', CustomElement);
+    </script>
+  </head>
+  <body>
+    <!-- instantiate directly -->
+    <x-custom attr="123">Abc</x-custom>
+
+    <!-- instantiate in a template -->
+    <template id="custom-layout">
+      <x-custom attr="456">Def</x-custom>
+    </template>
+    
+    <script>
+      window.addEventListener('load', () => {
+        // instantiate in a template
+        // IMPORTANT:
+        //  - template.content.cloneNode(true) DOES NOT yet render contents.
+        //    Content elements are rendered only after fragment is placed into a document.
+        //  - document.importNode(template.content, true) also renders content.
+        //    Content elements are rendered (..important for custom elements) immediately.
+
+        const fragment = document.body.querySelector('#custom-layout').content.cloneNode(true);
+        // const fragment = document.importNode(document.querySelector('#custom-layout').content, true);
+        const el = fragment.querySelector('x-custom');
+        console.log('x-custom', el.attr);  // `attr` is accessible only after custom is instantiated
+        document.body.appendChild(fragment);
+
+        // instantiate in a script
+        [document.createElement('x-custom')].forEach(el => {
+          el.attr = '789';
+          el.textContent = 'Ghi';
+          document.body.appendChild(el);
+        });
+
+        // access in a script
+        document.body.querySelector('x-custom[attr="123"]').textContent += '-dynamic';
+        document.body.querySelector('x-custom[attr="456"]').textContent += '-dynamic';
+        document.body.querySelector('x-custom[attr="789"]').textContent += '-dynamic';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web components - list </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <script>
+      class ListElement extends HTMLElement {
+        static registerCustomElement() {
+          ListElement.template = document.createElement('template');
+          ListElement.template.innerHTML = `
+            <style>
+              :host {
+                display: flex;
+                flex-direction: column;
+              }
+              .d-none {
+                display: none;
+              }
+            </style>
+            <slot></slot>
+          `;
+
+          window.customElements.define('x-list', ListElement);
+        }
+
+        constructor() {
+          super();
+          const shadowRoot = this.attachShadow({ mode: 'open' });
+          shadowRoot.appendChild(ListElement.template.content.cloneNode(true));
+        }
+        
+        get items() {
+          return this.querySelectorAll('x-list-item');
+        }
+      }
+
+      class ListItemElement extends HTMLElement {
+        static registerCustomElement() {
+          ListItemElement.template = document.createElement('template');
+          ListItemElement.template.innerHTML = `
+            <style>
+              .d-none {
+                display: none;
+              }
+            </style>
+            <p class='label d-none'></p>
+            <slot></slot>
+          `;
+          window.customElements.define('x-list-item', ListItemElement);
+        }
+        
+        static observedAttributes = ['label'];
+        
+        constructor() {
+          super();
+          const shadowRoot = this.attachShadow({ mode: 'open' });
+          shadowRoot.appendChild(ListItemElement.template.content.cloneNode(true));
+        }
+
+        attributeChangedCallback(name, oldVal, val) {
+          this.render({ [name]: val });
+        }
+
+        get label() { return this.getAttribute('label') }
+        set label(val) { this.setAttribute('label', val) }
+
+        render({ label }) {
+          if (label !== undefined) {
+            [this.shadowRoot.querySelector('p.label')].forEach(p => {
+              p.textContent = label.toString();
+              p.classList.toggle('d-none', this.label.textContent === '');
+            });
+          }
+        }
+      }
+
+      [ListElement, ListItemElement].forEach(x => { x.registerCustomElement() });
+    </script>
+  </head>
+  <body>
+    <x-list>
+      <x-list-item label="1">Abc</x-list-item>
+      <x-list-item label="2">Def</x-list-item>
+      <x-list-item>Ghi</x-list-item>
+    </x-list>
+  </body>
+</html>
