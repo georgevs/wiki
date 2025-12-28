@@ -310,3 +310,63 @@ def scandir(folder_path):
         else:
           yield entry.path 
 ```
+### File or Stdin
+```python
+import logging
+import sys
+
+logger = logging.getLogger(__name__)
+
+def main(config):
+  fp = open(config.file_path, 'rt') if config.file_path else sys.stdin
+  fpo = open(config.out_file_path, 'rt') if config.out_file_path else sys.stdout
+  exit_code = transform(fp, fpo)
+  return exit_code
+
+def transform(fp, fpo):
+  logging.debug('tranform')
+  lines = iter(fp.readline, '')
+  lines = map(str.upper, lines)
+  for line in lines: print(line, file=fpo)
+  return 0
+
+if __name__ == '__main__':
+  import argparse
+  parser = argparse.ArgumentParser()
+  parser.add_argument('file_path', type=str, nargs='?')
+  parser.add_argument('--out', dest='out_file_path', type=str)
+  parser.add_argument('-v', '--verbose', action='count', default=0)
+  config = parser.parse_args()
+  level = (
+    logging.DEBUG if config.verbose >= 2 else
+    logging.INFO if config.verbose >= 1 else
+    logging.WARNING
+  )
+  logging.basicConfig(level=level, format='%(message)s')
+  sys.exit(main(config))
+```
+### Parse Xml and Text
+```python
+import collections
+import re
+import xml.etree.ElementTree
+
+Point = collections.namedtuple('Point', 'x y')
+
+def load_points_xml(fp):
+  root = xml.etree.ElementTree.parse(fp).getroot()
+  parse_point = make_parse_node(Point._fields, Point)
+  return map(parse_point, root.findall('points/point'))
+
+def make_parse_node(fields, ctor=lambda *xs: xs):
+  return lambda node: ctor(*[node.find(field).text for field in fields])
+
+def load_points_txt(fp):
+  lines = iter(fp.readline, '')
+  parse_point = make_parse_pattern(r'point (\d+) (\d+)', Point)
+  return filter(bool, map(parse_point, lines))
+
+def make_parse_pattern(pattern, ctor=lambda *xs: True):
+  search_pattern = re.compile(pattern).search
+  return lambda line: (match := search_pattern(line)) and ctor(*match.groups())
+```
